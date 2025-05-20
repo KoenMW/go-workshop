@@ -7,3 +7,7 @@ You can install the Go Extension for VSCode
     Go to the Extensions view (Ctrl+Shift+X or Cmd+Shift+X on macOS).
     Search for "Go" (published by Google).
     Click Install.
+
+test with go run main.go in the terminal
+
+    
