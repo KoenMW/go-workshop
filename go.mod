@@ -1,4 +1,4 @@
-module workshop
+module github.com/KoenMW/go-workshop
 
 go 1.23.6
 

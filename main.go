@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"workshop/regression"
+	"github.com/KoenMW/go-workshop/regression"
 )
 
 func main() {
