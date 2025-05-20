@@ -1,12 +1,16 @@
-package main
+package regression
 
 import (
 	"fmt"
 
+	utils "workshop/basics"
+
 	"github.com/sajari/regression"
 )
 
-func main() {
+func Reg() {
+	utils.LoadData()
+
 	r := new(regression.Regression)
 	r.SetObserved("Murders per annum per 1,000,000 inhabitants")
 	r.SetVar(0, "Inhabitants")
