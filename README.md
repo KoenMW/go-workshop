@@ -27,6 +27,7 @@ Install the **Go extension** for Visual Studio Code:
 
 ### 3. Run the Project
 
+Download main.go from this project.
 Use the terminal to run the project:
 
 ```bash
