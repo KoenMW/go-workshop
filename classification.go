@@ -188,7 +188,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	// Load data from CSV
-	weapons, err := loadWeapons("elden_ring_weapon.csv")
+	weapons, err := loadWeapons("data/elden_ring_weapon.csv")
 	if err != nil {
 		fmt.Printf("Error loading data: %v\n", err)
 		return
