@@ -3,7 +3,7 @@ package regression
 import (
 	"fmt"
 
-	utils "github.com/KoenMW/go-workshop/basics"
+	"go-workshop/basics"
 
 	"github.com/sajari/regression"
 )
