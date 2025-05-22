@@ -1,5 +1,4 @@
-//module github.com/KoenMW/go-workshop
-module go-workshop-1
+module github.com/KoenMW/go-workshop
 
 go 1.23.6
 
