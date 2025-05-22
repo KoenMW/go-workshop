@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	utils "github.com/KoenMW/go-workshop/basics"
+	utils "go-workshop-1/basics"
 
 	"github.com/sajari/regression"
 )
