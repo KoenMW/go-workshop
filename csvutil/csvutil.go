@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // Weapon represents all attributes from the CSV
@@ -23,6 +24,11 @@ type Weapon struct {
 	Fai     float64
 	Arc     float64
 	Any     float64
+	PhyDF   float64
+	MagDF   float64
+	FirDF   float64
+	LitDF   float64
+	HolDF   float64
 	Bst     float64
 	Rst     float64
 	Wgt     float64
@@ -53,12 +59,22 @@ func LoadWeapons(filename string) ([]Weapon, error) {
 		weapon := Weapon{
 			Name:    record[0],
 			Type:    record[1],
-			Upgrade: record[18],
+			Upgrade: record[22],
 		}
 
-		for j := 2; j < 18; j++ {
-			val, err := strconv.ParseFloat(record[j], 64)
+		for j := 2; j < len(record)-1; j++ {
+			parsed := strings.Replace(record[j], "(", "", 1)
+			parsed = strings.Replace(parsed, ")", "", 1)
+			parsed = strings.Replace(parsed, "-", "0", 1)
+			parsed = strings.Replace(parsed, "E", "0", 1)
+			parsed = strings.Replace(parsed, "D", "1", 1)
+			parsed = strings.Replace(parsed, "C", "2", 1)
+			parsed = strings.Replace(parsed, "B", "3", 1)
+			parsed = strings.Replace(parsed, "A", "4", 1)
+			parsed = strings.Replace(parsed, "S", "5", 1)
+			val, err := strconv.ParseFloat(parsed, 64)
 			if err != nil {
+				println("it wasn't a float: ", record[j])
 				val = 0 // Default on parse error
 			}
 			switch j {
@@ -89,10 +105,20 @@ func LoadWeapons(filename string) ([]Weapon, error) {
 			case 14:
 				weapon.Any = val
 			case 15:
-				weapon.Bst = val
+				weapon.PhyDF = val
 			case 16:
-				weapon.Rst = val
+				weapon.MagDF = val
 			case 17:
+				weapon.FirDF = val
+			case 18:
+				weapon.LitDF = val
+			case 19:
+				weapon.HolDF = val
+			case 20:
+				weapon.Bst = val
+			case 21:
+				weapon.Rst = val
+			case 22:
 				weapon.Wgt = val
 			}
 		}
