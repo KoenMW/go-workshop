@@ -3,42 +3,72 @@ package regression
 import (
 	"fmt"
 	"go-workshop-1/csvutil"
-	"log"
+	"reflect"
 
 	"github.com/sajari/regression"
 )
 
-var weaponDataPoints regression.DataPoints
-
-func Init(csvPath string) {
-
-	weapons, err := csvutil.LoadWeapons(csvPath)
-	if err != nil {
-		log.Fatalf("Failed to load weapons: %v", err)
-	}
-
-	for _, w := range weapons {
-		weaponDataPoints = append(weaponDataPoints, regression.DataPoint(w.PhyDF, []float64{
-			w.Phy, w.Mag, w.Fir, w.Lit, w.Hol, w.Cri, w.Sta, w.Str, w.Dex, w.Int, w.Fai, w.Arc, w.Any, w.Bst, w.Rst, w.Wgt, w.FirDF, w.HolDF, w.LitDF, w.MagDF,
-		}))
-	}
+type RegOptions struct {
+	YField  string
+	XFields []string
 }
 
-func Reg() {
+func CreateDataPoints(weapons []csvutil.Weapon, yField string, xFields []string) (datapoints regression.DataPoints, err error) {
+	var weaponDataPoints regression.DataPoints
+	for _, weapon := range weapons {
+		values := reflect.ValueOf(weapon)
 
-	if len(weaponDataPoints) == 0 {
-		fmt.Println("weapon data not loaded please call regression.Init() first")
-		return
+		yValue := values.FieldByName(yField)
+
+		if !yValue.IsValid() || yValue.Kind() != reflect.Float64 {
+			return nil, fmt.Errorf("invalid Y field: %s", yField)
+		}
+
+		xRow := []float64{}
+
+		for _, xField := range xFields {
+			xValue := values.FieldByName(xField)
+
+			if !xValue.IsValid() || xValue.Kind() != reflect.Float64 {
+				println("oh no")
+				return nil, fmt.Errorf("invalid X field: %s", xField)
+			}
+
+			xRow = append(xRow, xValue.Float())
+		}
+
+		weaponDataPoints = append(weaponDataPoints, regression.DataPoint(yValue.Float(), xRow))
 	}
 
-	// print(dataPoints)
+	return weaponDataPoints, nil
+}
+
+func Reg(weapons regression.DataPoints, args ...interface{}) {
+	yField := ""
+
+	xFields := []string{}
+
+	if len(args) >= 1 {
+		if y, ok := args[0].(string); ok {
+			yField = y
+		}
+	}
+	if len(args) >= 2 {
+		if x, ok := args[1].([]string); ok {
+			xFields = x
+		}
+	}
 
 	r := new(regression.Regression)
-	r.SetObserved("PhyDF")
-	r.SetVar(0, "Bst")
+	r.SetObserved(yField)
+
+	for i, v := range xFields {
+		r.SetVar(i, v)
+	}
+
 	// r.SetVar(1, "Percent with incomes below $5000")
 	// r.SetVar(2, "Percent unemployed")
-	r.Train(weaponDataPoints...)
+	r.Train(weapons...)
 	r.Run()
 
 	fmt.Printf("Regression formula:\n%v\n", r.Formula)
