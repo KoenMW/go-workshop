@@ -2,7 +2,7 @@ package classification
 
 import (
 	"fmt"
-	"go-workshop-1/csvutil"
+	"go-workshop/csvutil"
 	"log"
 )
 

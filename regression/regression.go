@@ -2,7 +2,7 @@ package regression
 
 import (
 	"fmt"
-	"go-workshop-1/csvutil"
+	"go-workshop/csvutil"
 	"reflect"
 
 	"github.com/sajari/regression"
