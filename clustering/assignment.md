@@ -23,4 +23,4 @@ Then open the file `output.png` to see the result!
 
 💡 Try changing the number of clusters or different fields to see what changes in the visual result.
 
-✅ **Tip**: You are allowed to use **ChatGPT** or **GitHub Copilot** to help generate the code for your `main.go`.
+✅ **Tip**: You can use **ChatGPT** or **GitHub Copilot** to help generate the code for your `main.go`.
