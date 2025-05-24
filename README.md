@@ -32,3 +32,10 @@ Use the terminal to run the project:
 
 ```bash
 go run main.go
+```
+
+#### expected output
+
+```
+Hello, Go 1.24.3!
+```
