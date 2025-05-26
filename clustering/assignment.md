@@ -6,11 +6,11 @@ Your assignment is to group weapons into clusters based on their stats and visua
 
 ## Task: Write your `main.go` code
 
-1. First import `clustering` and `csvutil` in main
+1. First **Import** the `clustering` and `csvutil` packages in main.
 
-2. Load the weapon data and check for errors
+2. **Load** the weapon data using `csvutil.LoadWeapons(...)`
 
-3. Generate datapoints with the following recommended fields:  
+3. **Generate datapoints** using the following recommended fields:  
    `Phy`, `Mag`, `Fir`, `Lit`, `Hol`, `Sta`, `Str`, `Dex`
 
 4. Run `clustering.RunKMeans(points, k)` with `k = 3`
